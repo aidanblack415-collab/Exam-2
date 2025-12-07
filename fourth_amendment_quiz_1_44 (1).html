@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Fourth Amendment Practice Test (Questions 1–44)</title>
+<style>
+body { font-family: Arial, sans-serif; padding: 20px; max-width: 1000px; margin: auto; }
+h1 { text-align: center; }
+.question { margin-bottom: 24px; padding: 12px; border: 1px solid #ccc; border-radius: 6px; }
+.question p { margin: 8px 0; }
+.correct { color: green; font-weight: bold; }
+.incorrect { color: red; font-weight: bold; }
+button { margin-top: 10px; padding: 6px 10px; cursor: pointer; }
+.choice-label { display: block; margin: 4px 0; }
+.explanation { margin-top: 6px; font-style: italic; }
+hr { margin: 30px 0; }
+</style>
+<script>
+const answerKey = {
+  1: { correct: 'B', explanation: 'The Fourth Amendment restricts government actors, not purely private ones. A private stadium security guard conducting a bag check is a private search, so the Fourth Amendment does not apply.' },
+  2: { correct: 'D', explanation: 'When a private person acts at the direction or request of law enforcement, they become a government agent for Fourth Amendment purposes. Here the manager searched at the investigator\'s request, so the Fourth Amendment applies and the warrantless entry makes the evidence suppressible.' },
+  3: { correct: 'B', explanation: 'The area immediately surrounding a home (curtilage) receives full Fourth Amendment protection. The officer physically intruded into Smith\'s curtilage and used the A/C unit to peer inside without a warrant, consent, or exigent circumstances, so those observations cannot lawfully support a warrant.' },
+  4: { correct: 'D', explanation: 'Officers may rely on what they can lawfully see from a public place under the plain-view doctrine. Here the officer stood on a public sidewalk and saw a marijuana plant, so he may use that observation to seek a warrant.' },
+  5: { correct: 'A', explanation: 'The Fourth Amendment limits government action, not purely private misconduct. Jack\'s break-in may be a crime, but it is a private search, so the Fourth Amendment is not implicated.' },
+  6: { correct: 'C', explanation: 'Open fields beyond the curtilage are not protected by the Fourth Amendment, even if marked with \'No Trespassing\' signs or fenced. The officer observed the marijuana plants in an open field area, so there was no Fourth Amendment search.' },
+  7: { correct: 'D', explanation: 'A Terry stop requires reasonable suspicion of criminal activity; a \'hunch\' is not enough. Because the officer lacked reasonable suspicion to stop Smith, the subsequent frisk and firearm discovery are tainted and must be suppressed.' },
+  8: { correct: 'A', explanation: 'During a lawful frisk, an officer may seize contraband only if its illegal nature is immediately apparent from the initial lawful touch (plain feel). Here the officer had to squeeze and manipulate the object before thinking it was marijuana, so the seizure exceeded the scope of a permissible frisk.' },
+  9: { correct: 'B', explanation: 'The officer had reasonable suspicion that Smith committed theft of gasoline, justifying the stop. But a frisk requires reasonable suspicion that the suspect is armed and dangerous. The facts support suspicion of theft, not danger, so the frisk (and gun discovery) were unjustified.' },
+  10: { correct: 'C', explanation: 'The DOJ Guidance prohibits using race as the sole basis for law enforcement actions like stops and frisks. A practice targeting all males of a particular race clearly violates that policy.' },
+  11: { correct: 'C', explanation: 'The Aguilar test looks at (1) the informant\'s veracity/credibility and (2) the basis of the informant\'s knowledge. Both prongs must be satisfied or supplemented to establish probable cause.' },
+  12: { correct: 'A', explanation: 'The CI has a strong track record (veracity) and gave recent, firsthand observations of cocaine in the house (basis of knowledge). Together, this satisfies Aguilar and supports probable cause on the CI\'s information alone.' },
+  13: { correct: 'B', explanation: 'Under Franks, suppression is required only if the officer knowingly, intentionally, or recklessly included false statements material to probable cause. Here the officer reasonably relied on the CI and did not know the statement was false, so suppression is not warranted.' },
+  14: { correct: 'D', explanation: 'Even when evidence is suppressed from the government\'s case-in-chief, it may still be retained and used to impeach the defendant if he testifies inconsistently. The investigators may therefore keep the documents for potential impeachment use.' },
+  15: { correct: 'D', explanation: 'Because the officer entered Walsh\'s house and searched a drawer without a warrant, consent, or an exception, the entire search was unconstitutional and all evidence found in the drawer must be excluded.' },
+  16: { correct: 'A', explanation: 'The exclusionary rule is primarily a deterrent remedy. It excludes unlawfully obtained evidence to discourage future Fourth Amendment violations by law enforcement.' },
+  17: { correct: 'C', explanation: 'Michaels was a passenger and had no reasonable expectation of privacy in Ryan\'s car or center console. Even if the search violated the Fourth Amendment, Michaels lacks standing to challenge it, so the drugs are admissible against him.' },
+  18: { correct: 'B', explanation: 'Ryan, as the car owner and driver, does have a reasonable expectation of privacy in his vehicle and console. The back-up officer searched without consent, probable cause, or any other justification, so the drugs must be suppressed as to Ryan.' },
+  19: { correct: 'C', explanation: 'Federal arrest warrants are generally valid nationwide and do not become stale merely with the passage of time if the underlying charge remains. The arresting officer in North Carolina had authority to arrest Jenkins on the counterfeit-currency warrant, so the evidence is admissible.' },
+  20: { correct: 'D', explanation: 'An arrest warrant implicitly authorizes entry into the suspect\'s own residence when officers reasonably believe he lives there and is currently inside. The officers had multiple indicators of residence and presence, so they may enter without an additional search warrant.' },
+  21: { correct: 'A', explanation: 'For felonies, officers may make a warrantless arrest in a public place when they have probable cause and authority over the offense. Those conditions were met, so the arrest and search incident to arrest were lawful.' },
+  22: { correct: 'B', explanation: 'Many jurisdictions limit warrantless misdemeanor arrests to offenses committed in the officer\'s presence. Because the misdemeanor did not occur in the officer\'s presence, the arrest was unlawful and the gun is suppressible.' },
+  44: { correct: 'D', explanation: 'Officers may perform reasonable administrative inspections (such as security checks of bags before entry to a federal facility). When they lawfully inspect the backpack and immediately see contraband like marijuana and a sawed-off shotgun, they may seize those items under the plain view doctrine, making them admissible.' },
+};
+
+function checkAnswer(qNum) {
+    const q = answerKey[qNum];
+    const name = 'q' + qNum;
+    const selected = document.querySelector('input[name="' + name + '"]:checked');
+    const result = document.getElementById('result' + qNum);
+    if (!selected) {
+        result.innerHTML = "<span class='incorrect'>Please select an answer.</span>";
+        return;
+    }
+    if (selected.value === q.correct) {
+        result.innerHTML = "<span class='correct'>Correct!</span> " + "<span class='explanation'>" + q.explanation + "</span>";
+    } else {
+        result.innerHTML = "<span class='incorrect'>Incorrect.</span> The correct answer is <b>" + q.correct + "</b>. " + "<span class='explanation'>" + q.explanation + "</span>";
+    }
+}
+</script>
+</head>
+<body>
+<h1>Fourth Amendment Practice Test (Questions 1–44)</h1>
+<p>Select an answer for each question and click <b>Check Answer</b> to see whether you are correct and read a short explanation.</p>
+<hr>
+<div class='question'>
+<p><b>Question 1.</b> Before being allowed inside a football stadium, all fans were required to have their personal belongings searched by a private stadium security officer. The officer found a sawed-off shotgun in Thompson's backpack and turned it over to federal law enforcement. Thompson moves to suppress the weapon, arguing the search violated the Fourth Amendment. The motion will likely be:</p>
+<label class='choice-label'><input type='radio' name='q1' value='A'> A. Denied, because Thompson forfeited his Fourth Amendment rights when he purchased the ticket to the game.</label>
+<label class='choice-label'><input type='radio' name='q1' value='B'> B. Denied, because the stadium security officer was conducting a private search; therefore, the Fourth Amendment did not apply.</label>
+<label class='choice-label'><input type='radio' name='q1' value='C'> C. Granted, because the stadium security officer was required to obtain a warrant before searching Thompson's backpack.</label>
+<label class='choice-label'><input type='radio' name='q1' value='D'> D. Granted, because the stadium security officer did not have reasonable suspicion to believe Thompson was presently armed and dangerous.</label>
+<button onclick='checkAnswer(1)'>Check Answer</button>
+<p id='result1'></p>
+</div>
+<div class='question'>
+<p><b>Question 2.</b> A federal criminal investigator suspected that Johnson was selling drugs out of his apartment. The investigator asked the manager of the apartment complex to use her master key to enter Johnson's room, look for drug evidence, and report back. She entered while Johnson was gone, found a baggie with white powder in a desk drawer, took it, and gave it to the investigator. After confirming it was cocaine, the investigator arrested Johnson. Johnson moves to suppress the evidence. The motion will likely be:</p>
+<label class='choice-label'><input type='radio' name='q2' value='A'> A. Denied, because the apartment manager conducted a private search of Johnson's apartment.</label>
+<label class='choice-label'><input type='radio' name='q2' value='B'> B. Denied, because the apartment manager limited her search to places where drugs could be concealed.</label>
+<label class='choice-label'><input type='radio' name='q2' value='C'> C. Granted, because the apartment manager failed to get a warrant before she entered Johnson's apartment.</label>
+<label class='choice-label'><input type='radio' name='q2' value='D'> D. Granted, because the apartment manager was acting as an agent of the government.</label>
+<button onclick='checkAnswer(2)'>Check Answer</button>
+<p id='result2'></p>
+</div>
+<div class='question'>
+<p><b>Question 3.</b> A police officer suspected that Smith was a drug dealer. Smith lived in a house at the end of a cul-de-sac. One evening, the officer walked up Smith's driveway, went around to the back of the house, and climbed onto an exterior A/C unit under a window to see inside. Leaning against the side of the house, he saw evidence that Smith was manufacturing meth inside. Based on this, he asked his supervisor for permission to apply for a warrant. To comply with the Fourth Amendment, the supervisor should:</p>
+<label class='choice-label'><input type='radio' name='q3' value='A'> A. Deny the request because the officer's observations needed to be corroborated by other evidence before applying for a search warrant.</label>
+<label class='choice-label'><input type='radio' name='q3' value='B'> B. Deny the request because the officer entered the curtilage of Smith's house without a warrant, consent, or an exigency to make his observations.</label>
+<label class='choice-label'><input type='radio' name='q3' value='C'> C. Grant the request because as a suspected drug dealer, Smith had a reduced expectation of privacy in his curtilage.</label>
+<label class='choice-label'><input type='radio' name='q3' value='D'> D. Grant the request because the officer never physically intruded into Smith's house; therefore, his observations from the curtilage were lawful.</label>
+<button onclick='checkAnswer(3)'>Check Answer</button>
+<p id='result3'></p>
+</div>
+<div class='question'>
+<p><b>Question 4.</b> A police officer suspected that Smith was a drug dealer. While standing on a public sidewalk, the officer saw a potted marijuana plant on the balcony of Smith's house. Based on this, the officer asked his supervisor for permission to apply for a warrant to search the house. To comply with the Fourth Amendment, the supervisor should:</p>
+<label class='choice-label'><input type='radio' name='q4' value='A'> A. Deny the request because the officer's observations needed to be corroborated by other evidence before applying for the search warrant.</label>
+<label class='choice-label'><input type='radio' name='q4' value='B'> B. Deny the request because the officer entered the curtilage of Smith's house without a warrant, consent, or an exigency to make his observations.</label>
+<label class='choice-label'><input type='radio' name='q4' value='C'> C. Grant the request because it never matters where an officer is physically located when he discovers criminal evidence.</label>
+<label class='choice-label'><input type='radio' name='q4' value='D'> D. Grant the request because the officer's observations were made from a place where the officer was lawfully present.</label>
+<button onclick='checkAnswer(4)'>Check Answer</button>
+<p id='result4'></p>
+</div>
+<div class='question'>
+<p><b>Question 5.</b> Jack is upset that the police are not doing anything to eradicate the drug problem in his neighborhood. One afternoon, he breaks into Smith's house, searches it, and finds two kilograms of packaged cocaine. Jack takes the cocaine to the police and tells a narcotics investigator how he obtained it. Smith is charged with trafficking cocaine. Did Jack violate Smith's Fourth Amendment rights?</p>
+<label class='choice-label'><input type='radio' name='q5' value='A'> A. No, because Jack conducted a private search, so the Fourth Amendment did not apply.</label>
+<label class='choice-label'><input type='radio' name='q5' value='B'> B. No, because as a drug dealer Smith had no reasonable expectation of privacy in his house.</label>
+<label class='choice-label'><input type='radio' name='q5' value='C'> C. Yes, because Jack committed a crime by breaking into Smith's house and searching it.</label>
+<label class='choice-label'><input type='radio' name='q5' value='D'> D. Yes, because it was unreasonable for Jack to enter Smith's house without permission.</label>
+<button onclick='checkAnswer(5)'>Check Answer</button>
+<p id='result5'></p>
+</div>
+<div class='question'>
+<p><b>Question 6.</b> A police officer discovered that Smith, a suspected drug dealer, owned a twenty-acre parcel of rural property. Despite several 'No Trespassing' signs, the officer crawled under a barbed-wire fence and entered the property. After walking several hundred yards through woods, the officer came to a clearing and saw about one hundred marijuana plants and several potted marijuana plants lined up against the outside of a small shed. Did the officer violate the Fourth Amendment?</p>
+<label class='choice-label'><input type='radio' name='q6' value='A'> A. Yes, because the officer violated the Fourth Amendment by ignoring the 'No Trespassing' signs and crawling under the barbed-wire fence.</label>
+<label class='choice-label'><input type='radio' name='q6' value='B'> B. Yes, because the officer violated the Fourth Amendment by trespassing upon the curtilage of Smith's property.</label>
+<label class='choice-label'><input type='radio' name='q6' value='C'> C. No, because the officer made his observations from open fields and the 'No Trespassing' signs had no bearing on the Fourth Amendment.</label>
+<label class='choice-label'><input type='radio' name='q6' value='D'> D. No, because the officer confirmed that Smith owned the property before he crawled under the barbed-wire fence to make his observations.</label>
+<button onclick='checkAnswer(6)'>Check Answer</button>
+<p id='result6'></p>
+</div>
+<div class='question'>
+<p><b>Question 7.</b> A police officer had a hunch that Smith was a drug dealer and stopped him as Smith exited a convenience store. The officer obtained Smith's ID, ran it, and learned Smith had a criminal history including violent crimes and weapons offenses. The officer frisked Smith and felt a firearm concealed in his front waistband, then removed it and arrested him. Smith moves to suppress the firearm. The motion will likely be:</p>
+<label class='choice-label'><input type='radio' name='q7' value='A'> A. Denied, because frisks for weapons are not considered Fourth Amendment searches.</label>
+<label class='choice-label'><input type='radio' name='q7' value='B'> B. Denied, because officers are always allowed to frisk suspects for weapons during any stop.</label>
+<label class='choice-label'><input type='radio' name='q7' value='C'> C. Granted, because the officer was required to ask Smith for consent before frisking him.</label>
+<label class='choice-label'><input type='radio' name='q7' value='D'> D. Granted, because the officer did not have reasonable suspicion to stop Smith.</label>
+<button onclick='checkAnswer(7)'>Check Answer</button>
+<p id='result7'></p>
+</div>
+<div class='question'>
+<p><b>Question 8.</b> A police officer established reasonable suspicion that Smith was involved in an armed carjacking earlier that day. The officer stopped Smith at gunpoint, handcuffed him, and frisked him. In Smith's jacket pocket, the officer felt a soft object he knew was not a weapon. After squeezing and manipulating it for several seconds, he concluded it was marijuana in a small plastic bag and removed it. It was indeed a bag of marijuana. Smith moves to suppress the marijuana. The motion will likely be:</p>
+<label class='choice-label'><input type='radio' name='q8' value='A'> A. Granted, because it was not immediately apparent to the officer that the soft object in Smith's pocket was contraband when he first felt the object.</label>
+<label class='choice-label'><input type='radio' name='q8' value='B'> B. Granted, because officers are only allowed to seize weapons from suspects during frisks.</label>
+<label class='choice-label'><input type='radio' name='q8' value='C'> C. Denied, because once the officer established reasonable suspicion to stop Smith, the officer could automatically frisk him and remove all objects from his pockets.</label>
+<label class='choice-label'><input type='radio' name='q8' value='D'> D. Denied, because once the officer established reasonable suspicion that Smith was presently armed and dangerous, the officer could frisk him and remove all objects from his pockets.</label>
+<button onclick='checkAnswer(8)'>Check Answer</button>
+<p id='result8'></p>
+</div>
+<div class='question'>
+<p><b>Question 9.</b> A police officer established reasonable suspicion that Smith filled his car with gasoline and then drove away without paying. The officer stopped Smith to investigate. After ordering Smith out of the car, the officer frisked him and found a firearm concealed in his rear waistband. Smith moves to suppress the firearm. The motion will likely be:</p>
+<label class='choice-label'><input type='radio' name='q9' value='A'> A. Granted, because the officer had no justification to stop Smith.</label>
+<label class='choice-label'><input type='radio' name='q9' value='B'> B. Granted, because the officer had no justification to frisk Smith.</label>
+<label class='choice-label'><input type='radio' name='q9' value='C'> C. Denied, because the officer was justified in stopping and frisking Smith.</label>
+<label class='choice-label'><input type='radio' name='q9' value='D'> D. Denied, because it was immediately apparent that the object in Smith's waistband was a firearm.</label>
+<button onclick='checkAnswer(9)'>Check Answer</button>
+<p id='result9'></p>
+</div>
+<div class='question'>
+<p><b>Question 10.</b> A federal police officer stops and frisks all males of a specific race because he believes males of that race commit more crimes than males of other races. Does this practice violate the Department of Justice's Guidance for Federal Law Enforcement Agencies Regarding the Use of Race, Ethnicity, Gender, National Origin, Religion, Sexual Orientation, Gender Identity, or Disability?</p>
+<label class='choice-label'><input type='radio' name='q10' value='A'> A. No, federal police officers can stop and frisk anyone they want anytime they want.</label>
+<label class='choice-label'><input type='radio' name='q10' value='B'> B. No, as long as federal police officers tell the person the reason for the stop and frisk.</label>
+<label class='choice-label'><input type='radio' name='q10' value='C'> C. Yes, this practice clearly violates the DOJ's Guidance concerning the use of race, etc.</label>
+<label class='choice-label'><input type='radio' name='q10' value='D'> D. Yes, because federal police officers can never use race as a factor when deciding to stop someone.</label>
+<button onclick='checkAnswer(10)'>Check Answer</button>
+<p id='result10'></p>
+</div>
+<div class='question'>
+<p><b>Question 11.</b> A police officer received information from a confidential informant (CI) that Nielson was selling methamphetamine out of his house. The officer wants to use the two-prong Aguilar test to determine if the CI's information establishes probable cause to search the house. What are the two prongs of the Aguilar test?</p>
+<label class='choice-label'><input type='radio' name='q11' value='A'> A. The credibility of the informant and the informant's track record.</label>
+<label class='choice-label'><input type='radio' name='q11' value='B'> B. The credibility of the informant and the informant's criminal history.</label>
+<label class='choice-label'><input type='radio' name='q11' value='C'> C. The credibility of the informant and the informant's basis of knowledge.</label>
+<label class='choice-label'><input type='radio' name='q11' value='D'> D. The credibility of the informant and the informant's promise to tell the truth.</label>
+<button onclick='checkAnswer(11)'>Check Answer</button>
+<p id='result11'></p>
+</div>
+<div class='question'>
+<p><b>Question 12.</b> A CI told a police officer that Stewart was selling drugs out of his house. The CI had provided information on twelve previous occasions, leading to ten arrests and seven convictions. The CI also said he had been inside Stewart's house earlier that day and seen about one kilogram of cocaine being packaged for sale. Applying the Aguilar test, the officer will likely:</p>
+<label class='choice-label'><input type='radio' name='q12' value='A'> A. Be able to establish probable cause to search Stewart's home based solely on the information provided by the CI.</label>
+<label class='choice-label'><input type='radio' name='q12' value='B'> B. Not be able to establish probable cause to search Stewart's home based solely on the information provided by the CI.</label>
+<label class='choice-label'><input type='radio' name='q12' value='C'> C. Not be able to establish probable cause because the information provided by the CI is stale.</label>
+<label class='choice-label'><input type='radio' name='q12' value='D'> D. Be able to establish probable cause, but only after he conducts surveillance and corroborates the information provided by the CI.</label>
+<button onclick='checkAnswer(12)'>Check Answer</button>
+<p id='result12'></p>
+</div>
+<div class='question'>
+<p><b>Question 13.</b> Same facts as Question 12. After searching Stewart's house and seizing the cocaine, the officer learns that the CI lied about being in Stewart's house earlier that day; the CI had only heard about the cocaine from someone else. At trial, Stewart moves to suppress the cocaine, claiming the search warrant affidavit violated the Fourth Amendment because it included the CI's false statement. The motion will likely be:</p>
+<label class='choice-label'><input type='radio' name='q13' value='A'> A. Granted, because the officer intentionally misled the judge who issued the warrant by including inaccurate information from the CI.</label>
+<label class='choice-label'><input type='radio' name='q13' value='B'> B. Denied, because the officer did not know the information was false and had no reason to believe the CI had lied.</label>
+<label class='choice-label'><input type='radio' name='q13' value='C'> C. Granted, because every time a search warrant affidavit contains inaccurate information, the judge must suppress the evidence.</label>
+<label class='choice-label'><input type='radio' name='q13' value='D'> D. Denied, because officers found cocaine in Stewart's house; therefore, it did not matter if inaccurate information was included in the affidavit.</label>
+<button onclick='checkAnswer(13)'>Check Answer</button>
+<p id='result13'></p>
+</div>
+<div class='question'>
+<p><b>Question 14.</b> At Jackson's trial for mail and wire fraud, the judge ruled that investigators violated the Fourth Amendment and suppressed several documents seized during a search of Jackson's office. The judge also ruled that other documents were lawfully seized and admissible at trial. Concerning the suppressed documents, the investigators should:</p>
+<label class='choice-label'><input type='radio' name='q14' value='A'> A. Return them to Jackson, as they were seized in violation of the Fourth Amendment.</label>
+<label class='choice-label'><input type='radio' name='q14' value='B'> B. Shred them according to their agency policy.</label>
+<label class='choice-label'><input type='radio' name='q14' value='C'> C. File them with the clerk of court.</label>
+<label class='choice-label'><input type='radio' name='q14' value='D'> D. Retain them in case they can be used at trial to impeach Jackson's testimony.</label>
+<button onclick='checkAnswer(14)'>Check Answer</button>
+<p id='result14'></p>
+</div>
+<div class='question'>
+<p><b>Question 15.</b> A police officer entered Walsh's house without a warrant, consent, or any exception to the warrant requirement. He searched a desk drawer and found a stolen firearm and several false passports. At Walsh's trial for possession of a stolen firearm and possession of false identification documents, which evidence will likely be admissible against Walsh?</p>
+<label class='choice-label'><input type='radio' name='q15' value='A'> A. The stolen firearm only.</label>
+<label class='choice-label'><input type='radio' name='q15' value='B'> B. The false passports only.</label>
+<label class='choice-label'><input type='radio' name='q15' value='C'> C. Both the stolen firearm and the false passports.</label>
+<label class='choice-label'><input type='radio' name='q15' value='D'> D. Neither the stolen firearm nor the false passports.</label>
+<button onclick='checkAnswer(15)'>Check Answer</button>
+<p id='result15'></p>
+</div>
+<div class='question'>
+<p><b>Question 16.</b> The primary purpose of the exclusionary rule is:</p>
+<label class='choice-label'><input type='radio' name='q16' value='A'> A. To deter police misconduct by creating negative consequences when officers violate the Fourth Amendment.</label>
+<label class='choice-label'><input type='radio' name='q16' value='B'> B. To create a civil cause of action whereby individuals who have their Fourth Amendment rights violated can sue police officers.</label>
+<label class='choice-label'><input type='radio' name='q16' value='C'> C. To always exclude evidence seized in violation of the Fourth Amendment at a criminal trial.</label>
+<label class='choice-label'><input type='radio' name='q16' value='D'> D. To give defense attorneys and prosecutors the opportunity to argue the merits of a case outside the presence of the jury prior to trial.</label>
+<button onclick='checkAnswer(16)'>Check Answer</button>
+<p id='result16'></p>
+</div>
+<div class='question'>
+<p><b>Question 17.</b> A police officer saw Ryan and Michaels leave a house known for illegal drug activity, get into a car, and drive away. The officer knew both men and knew the car belonged to Ryan. After Ryan failed to completely stop at a stop sign, the officer conducted a traffic stop and began writing a citation. A back-up officer arrived and, before the citation was finished, searched Ryan's car without consent or probable cause and found twelve grams of crack cocaine in the center console. At Michaels' trial for possession with intent to distribute crack cocaine, the drugs will likely be:</p>
+<label class='choice-label'><input type='radio' name='q17' value='A'> A. Suppressed, because the traffic stop was unlawful, as the officer did not have reasonable suspicion the men were engaged in drug activity.</label>
+<label class='choice-label'><input type='radio' name='q17' value='B'> B. Suppressed, because the officer unlawfully extended the duration of the traffic stop to allow time to search Ryan's car.</label>
+<label class='choice-label'><input type='radio' name='q17' value='C'> C. Admitted, because Michaels did not have standing to object to the search of Ryan's car, even if the search was unlawful.</label>
+<label class='choice-label'><input type='radio' name='q17' value='D'> D. Admitted, because even if Michaels had standing, the drugs would have been discovered under the inevitable discovery doctrine.</label>
+<button onclick='checkAnswer(17)'>Check Answer</button>
+<p id='result17'></p>
+</div>
+<div class='question'>
+<p><b>Question 18.</b> Same facts as Question 17. At Ryan's trial for possession with intent to distribute crack cocaine, the drugs will likely be:</p>
+<label class='choice-label'><input type='radio' name='q18' value='A'> A. Suppressed, because the traffic stop was unlawful, as the officer did not have reasonable suspicion the men were engaged in drug activity.</label>
+<label class='choice-label'><input type='radio' name='q18' value='B'> B. Suppressed, because the back-up officer did not have consent, probable cause, or any other lawful reason to search the center console.</label>
+<label class='choice-label'><input type='radio' name='q18' value='C'> C. Admitted, because Ryan had no reasonable expectation of privacy in his car after leaving a house known for drug activity.</label>
+<label class='choice-label'><input type='radio' name='q18' value='D'> D. Admitted, because even if the search was unlawful, the good-faith exception to the exclusionary rule applies.</label>
+<button onclick='checkAnswer(18)'>Check Answer</button>
+<p id='result18'></p>
+</div>
+<div class='question'>
+<p><b>Question 19.</b> A federal law enforcement officer obtained a warrant from a federal magistrate judge in the Southern District of Georgia to arrest Jenkins for passing counterfeit currency at a convenience store. Four years later, a different federal officer with authority over counterfeiting offenses learned that Jenkins was living in Asheville, North Carolina, in the Western District of North Carolina. That officer arrested Jenkins as he exited a restaurant in downtown Asheville. During a lawful search incident to arrest, the officer found several counterfeit fifty-dollar bills in Jenkins' pocket. At trial, Jenkins moves to suppress the currency. The court will likely find the evidence is:</p>
+<label class='choice-label'><input type='radio' name='q19' value='A'> A. Inadmissible because the arresting officer in North Carolina did not have authority to arrest Jenkins on the warrant obtained in Georgia.</label>
+<label class='choice-label'><input type='radio' name='q19' value='B'> B. Inadmissible because the arrest warrant was stale, as it had been issued four years earlier.</label>
+<label class='choice-label'><input type='radio' name='q19' value='C'> C. Admissible because the arresting officer had authority to arrest Jenkins for passing counterfeit United States currency.</label>
+<label class='choice-label'><input type='radio' name='q19' value='D'> D. Admissible because Jenkins had no reasonable expectation of privacy in the contents of his pockets once he fled Georgia.</label>
+<button onclick='checkAnswer(19)'>Check Answer</button>
+<p id='result19'></p>
+</div>
+<div class='question'>
+<p><b>Question 20.</b> Federal officers obtained an arrest warrant for Griffin. They got his address from the DMV, then confirmed with Griffin's former probation officer that it was the same address Griffin had provided two years earlier. At the house, they saw a car registered to Griffin in the driveway. While standing on the sidewalk, they saw a man fitting Griffin's description walk past an open window. Unsure if they can lawfully enter to arrest him, they call you for advice. Consistent with the Fourth Amendment and current case law, you tell them:</p>
+<label class='choice-label'><input type='radio' name='q20' value='A'> A. They must obtain a search warrant in addition to the arrest warrant to lawfully enter Griffin's house to arrest him.</label>
+<label class='choice-label'><input type='radio' name='q20' value='B'> B. They cannot enter the house because they do not have a reasonable belief that Griffin lives there nor that he is currently inside.</label>
+<label class='choice-label'><input type='radio' name='q20' value='C'> C. They do not need a search warrant because the arrest warrant allows them to enter any house anytime they want to attempt to locate and arrest Griffin.</label>
+<label class='choice-label'><input type='radio' name='q20' value='D'> D. They do not need a search warrant because the arrest warrant allows the officers to enter Griffin's house, and it is reasonable to believe Griffin lives there and is home.</label>
+<button onclick='checkAnswer(20)'>Check Answer</button>
+<p id='result20'></p>
+</div>
+<div class='question'>
+<p><b>Question 21.</b> Based on personal observations and witness statements, a police officer established probable cause that Robinson robbed a post office, a federal felony. When the officer, who had arrest authority over the offense, later saw Robinson walking down the street, he arrested Robinson without a warrant. A search incident to arrest recovered several books of stamps reported stolen in the robbery. Robinson moves to suppress the stamps, claiming the arrest was unlawful. The motion will likely be:</p>
+<label class='choice-label'><input type='radio' name='q21' value='A'> A. Denied, because the officer had probable cause, arrest authority over the offense, and located Robinson in a public place.</label>
+<label class='choice-label'><input type='radio' name='q21' value='B'> B. Denied, because Robinson gave up any reasonable expectation of privacy he had by being in a public place.</label>
+<label class='choice-label'><input type='radio' name='q21' value='C'> C. Granted, because the officer was required to obtain an arrest warrant before arresting Robinson in a public place.</label>
+<label class='choice-label'><input type='radio' name='q21' value='D'> D. Granted, because Robinson did not commit the crime in the officer's presence.</label>
+<button onclick='checkAnswer(21)'>Check Answer</button>
+<p id='result21'></p>
+</div>
+<div class='question'>
+<p><b>Question 22.</b> Based on several witness statements, a federal officer established probable cause that Randolph committed a federal misdemeanor. When the officer, who had arrest authority over the offense, saw Randolph walking on a public sidewalk, he arrested Randolph without a warrant. A search incident to arrest revealed a handgun in Randolph's waistband; Randolph was a convicted felon. At Randolph's trial for being a felon in possession of a firearm, he moves to suppress the handgun. The motion will likely be:</p>
+<label class='choice-label'><input type='radio' name='q22' value='A'> A. Granted, because it was not immediately apparent to the officer that the object in Randolph's waistband was a weapon.</label>
+<label class='choice-label'><input type='radio' name='q22' value='B'> B. Granted, because the officer did not witness Randolph commit the crime nor did it otherwise occur in the officer's presence.</label>
+<label class='choice-label'><input type='radio' name='q22' value='C'> C. Denied, because as a convicted felon Randolph had no reasonable expectation of privacy in objects concealed on his person.</label>
+<label class='choice-label'><input type='radio' name='q22' value='D'> D. Denied, because the good faith exception to the exclusionary rule applies.</label>
+<button onclick='checkAnswer(22)'>Check Answer</button>
+<p id='result22'></p>
+</div>
+<div class='question'>
+<p><b>Question 44.</b> While conducting a valid inspection of a person's backpack prior to allowing the person entry onto a federal facility, federal police officers found a bag of marijuana and a sawed-off shotgun. The government charged the person with drug and firearm offenses. At trial, the marijuana and sawed-off shotgun will likely be:</p>
+<label class='choice-label'><input type='radio' name='q44' value='A'> A. Suppressed, because the officer did not get valid consent before searching the backpack.</label>
+<label class='choice-label'><input type='radio' name='q44' value='B'> B. Suppressed, because the officer did not have probable cause or reasonable suspicion to search the backpack.</label>
+<label class='choice-label'><input type='radio' name='q44' value='C'> C. Admitted, because the officer had probable cause to believe the backpack contained contraband.</label>
+<label class='choice-label'><input type='radio' name='q44' value='D'> D. Admitted, because the marijuana and sawed-off shotgun were lawfully seized under the plain view doctrine.</label>
+<button onclick='checkAnswer(44)'>Check Answer</button>
+<p id='result44'></p>
+</div>
+
+</body>
+</html>
